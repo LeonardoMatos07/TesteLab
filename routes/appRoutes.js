@@ -16,4 +16,8 @@ router.delete('/lab/delete', async (req, res)=>{
      await labController.deleteLab(req, res);
 })
 
+router.put('/lab/update', async (req, res)=>{
+     await labController.updateLab(req, res);
+})
+
 module.exports = router

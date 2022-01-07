@@ -18,7 +18,7 @@ const create = async (req, res)=>{
           }
 
           lab = await Lab.create(req.body)
-          logger.info({msg:"Contato cadastrado com sucesso!"})
+          logger.info({msg:"Laboratório cadastrado com sucesso!"})
           return res.send({lab})
 
      } catch(err){
@@ -62,7 +62,7 @@ const deleteLab = async (req, res)=>{
                return res.status(400).send({hasError: true, erro: "Não foi possivel encontrar o laboratório, dados incompletos"})
           }
 
-          lab = await User.findOne({name})
+          lab = await Lab.findOne({name})
 
           if(!lab){
                logger.error({msg:"Laboratório não registrado!"})
@@ -79,4 +79,19 @@ const deleteLab = async (req, res)=>{
      }
 }
 
-module.exports = {create, getLabs, deleteLab}
+const updateLab = async (req, res) => {
+
+     try {
+          const {name, statusUp, nameUp} = req.body
+          labupdate = await Lab.findOneAndUpdate({name: name}, {status: statusUp, name:nameUp})
+          
+          return res.send('Dados alterados')
+         
+
+     } catch(err){
+          logger.error({msg:"Erro ao encontrar laboratório"})
+          res.status(400).send({erro:"Erro ao encontrar laboratório"})
+     }
+}
+
+module.exports = {create, getLabs, deleteLab, updateLab}
