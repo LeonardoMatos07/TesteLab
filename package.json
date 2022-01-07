@@ -1,0 +1,39 @@
+{
+  "name": "projeto_wier",
+  "version": "1.0.0",
+  "description": "## Ferramentas utilizadas:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.5",
+    "mqtt": "^4.2.8",
+    "nodemailer": "^6.6.3",
+    "nodemailer-express-handlebars": "^4.0.0",
+    "pino": "^6.13.0",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^2.14.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeonardoMatos07/projetoWier.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/LeonardoMatos07/projetoWier/issues"
+  },
+  "homepage": "https://github.com/LeonardoMatos07/projetoWier#readme"
+}
