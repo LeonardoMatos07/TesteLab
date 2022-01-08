@@ -1,11 +1,11 @@
 const mongoose = require('../../config/db');
 
-const LabSchema = new mongoose.Schema({
+const ExameSchema = new mongoose.Schema({
      name:{
           type:String,
           require:true,
      },
-     endereco:{
+     tipo:{
           type:String,
           require:true
      },
@@ -22,11 +22,11 @@ const LabSchema = new mongoose.Schema({
     
 })
 
-LabSchema.pre('save', async function(next){
+ExameSchema.pre('save', async function(next){
    
      next();
 })
 
-const Lab = mongoose.model('labs', LabSchema)
+const Exame = mongoose.model('exames', ExameSchema)
 
-module.exports = Lab
+module.exports = Exame

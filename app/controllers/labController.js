@@ -5,7 +5,7 @@ const logger = require('pino')()
 
 
 
-const create = async (req, res)=>{
+const createLab = async (req, res)=>{
      try{
           const {name, endereco, status} = req.body
           if(await Lab.findOne({name})){
@@ -34,15 +34,15 @@ const getLabs = async (req, res)=>{
           const {status} = req.body
 
           if(!status){
-               logger.error({msg:"Não foi possivel encontrar o laboratório, dados incompletos"})
-               return res.status(400).send({hasError: true, erro: "Não foi possivel encontrar o laboratório, dados incompletos"})
+               logger.error({msg:"Não foi possivel encontrar os laboratórios, dados incompletos"})
+               return res.status(400).send({hasError: true, erro: "Não foi possivel encontrar os laboratórios, dados incompletos"})
           }
 
           lab = await Lab.find({status})
 
           if(!lab){
-               logger.error({msg:"Laboratórios não registrados!"})
-               return res.status(400).send({erro:"Laboratórios não registrados!"})
+               logger.error({msg:"Nenhum laboratório ativo!"})
+               return res.status(400).send({erro:"Nenhum laboratório ativo!"})
           }
           logger.info({msg:"Laboratórios encontrados!"})
           return res.send({lab})
@@ -74,16 +74,22 @@ const deleteLab = async (req, res)=>{
           return res.send("Laboratório deletado!")
 
      } catch(err){
-          logger.error({msg:"Erro ao encontrar laboratório"})
-          res.status(400).send({erro:"Erro ao encontrar laboratório"})
+          logger.error({msg:"Erro ao deletar laboratório"})
+          res.status(400).send({erro:"Erro ao deletar laboratório"})
      }
 }
 
 const updateLab = async (req, res) => {
 
      try {
-          const {name, statusUp, nameUp} = req.body
-          labupdate = await Lab.findOneAndUpdate({name: name}, {status: statusUp, name:nameUp})
+          const {_id, nameUp, enderecoUp, statusUp} = req.body
+
+          if(!await Lab.findOne({_id})){
+               logger.warn({msg:"Laboratório não encontrado"})
+               return res.status(400).send({hasError: true, erro: "Laboratório não encontrado"})
+          }
+
+          await Lab.findOneAndUpdate({_id: _id}, {name:nameUp, endereco: enderecoUp, status: statusUp})
           
           return res.send('Dados alterados')
          
@@ -94,4 +100,4 @@ const updateLab = async (req, res) => {
      }
 }
 
-module.exports = {create, getLabs, deleteLab, updateLab}
+module.exports = {createLab, getLabs, deleteLab, updateLab}
