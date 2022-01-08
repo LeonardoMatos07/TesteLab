@@ -1,14 +1,15 @@
 const { deleteOne } = require('../models/Labs')
 const Exame = require('../models/Exames')
-const Lab = require('../models/Labs')
 const logger = require('pino')()
 
-
+// Um exame pode ser associado a um laboratório ou no momento da criação ou em uma atualização
+// O nome do laboratório == true indica que aquele laboratório está associado ao exame
+// Tanto os exames quanto os laboratórios podem ser associados estando no status ativo ou inativo, assim como a remoção 
 
 
 const createExame = async (req, res)=>{
      try{
-          const {name, tipo, status} = req.body
+          const {name, tipo, status, lab} = req.body
 
           if(!name || !tipo || !status){
                logger.error({msg:"Não foi possivel cadastrar o exame, dados incompletos"})
@@ -80,14 +81,14 @@ const deleteExame = async (req, res)=>{
 const updateExame = async (req, res) => {
 
      try {
-          const {_id, nameUp, tipoUp, statusUp} = req.body
+          const {_id, nameUp, tipoUp, statusUp, labUp} = req.body
 
           if(!await Exame.findOne({_id})){
                logger.warn({msg:"Exame não encontrado"})
                return res.status(400).send({hasError: true, erro: "Exame não encontrado"})
           }
 
-          await Exame.findOneAndUpdate({_id: _id}, {status: statusUp, name:nameUp, tipo: tipoUp})
+          await Exame.findOneAndUpdate({_id: _id}, {status: statusUp, name:nameUp, tipo: tipoUp, lab:labUp})
           
           return res.send('Dados alterados')
          
@@ -99,36 +100,6 @@ const updateExame = async (req, res) => {
 }
 
 
-// Associação de um exame com laboratórios
 
-
-
-const associationExame = async (req, res) => {
-
-    try {
-         const {_id, name} = req.body
-
-         exame = await Exame.findOne({_id})
-
-         if(!exame){
-              logger.warn({msg:"Exame não encontrado"})
-              return res.status(400).send({hasError: true, erro: "Exame não encontrado"})
-         }
-
-         lab = await Lab.findOne({name})
-
-         if(!lab){
-            logger.warn({msg:"Laboratório não encontrado"})
-            return res.status(400).send({hasError: true, erro: "Laboratório não encontrado"})
-       }
-       return res.send(lab)
-    
-
-
-    } catch(err){
-         logger.error({msg:"Erro ao associar exame"})
-         res.status(400).send({erro:"Erro ao associar exame"})
-    }
-}
 
 module.exports = {createExame, getExames, deleteExame, updateExame, associationExame}

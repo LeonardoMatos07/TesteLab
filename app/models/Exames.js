@@ -13,7 +13,11 @@ const ExameSchema = new mongoose.Schema({
           type:String,
           require:true
          
-     },     
+     },   
+     lab:{
+        type:Object,
+        require:true,
+   },  
 
      createdAt:{
           type:Date,
