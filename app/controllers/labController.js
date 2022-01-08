@@ -1,4 +1,3 @@
-const { deleteOne } = require('../models/Labs')
 const Lab = require('../models/Labs')
 const logger = require('pino')()
 

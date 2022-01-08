@@ -1,10 +1,9 @@
-const { deleteOne } = require('../models/Labs')
 const Exame = require('../models/Exames')
 const logger = require('pino')()
 
-// Um exame pode ser associado a um laboratório ou no momento da criação ou em uma atualização
+// Um exame pode ser associado a um laboratório no momento da criação ou em uma atualização
 // O nome do laboratório == true indica que aquele laboratório está associado ao exame
-// Tanto os exames quanto os laboratórios podem ser associados estando no status ativo ou inativo, assim como a remoção 
+// Tanto os exames quanto os laboratórios podem ser associados estando no status ativo ou inativo, assim como podem ser removidos
 
 
 const createExame = async (req, res)=>{
@@ -102,4 +101,4 @@ const updateExame = async (req, res) => {
 
 
 
-module.exports = {createExame, getExames, deleteExame, updateExame, associationExame}
+module.exports = {createExame, getExames, deleteExame, updateExame}

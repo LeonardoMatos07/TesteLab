@@ -40,39 +40,39 @@
 ## Rotas e exemplos:
 
 <br />
-Para cadastrar num novo contato
+Para cadastrar num novo laboratório
 
-#### [POST] em /contact/create
+#### [POST] em /lab/create
 <br />
 
 ```json
 {
-	"name":"Leonardo",
-	"telefone": "75991922332",
-	"endereco":"Rua L, 405"
+	"name":"Lab1",
+	"endereco":"Rua Primeira",
+	"status": "ativo",
 }
 ```
 <br />
-Para buscar o contato
+Para buscar laboratórios ativos
 
-#### [GET] em /contact/get
+#### [GET] em /lab/get
 
 
 ```json
 {
-	"telefone": "75991922332"
+	"status": "ativo"
 	
 }
 ```
 <br />
-Para deletar um contato
+Para deletar um laboratório
 
-#### [DELETE] em /contact/delete
+#### [DELETE] em /lab/delete
 
 
 ```json
 {
-	"telefone": "75991922332"
+	"name": "Lab1"
 	
 }
 ```
