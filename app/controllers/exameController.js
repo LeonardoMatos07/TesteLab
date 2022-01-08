@@ -51,6 +51,32 @@ const getExames = async (req, res)=>{
      }
 }
 
+
+const getExamesAss = async (req, res)=>{
+    try{
+         const {name} = req.body
+
+         if(!name){
+              logger.error({msg:"Não foi possivel encontrar os exames, dados incompletos"})
+              return res.status(400).send({hasError: true, erro: "Não foi possivel encontrar os exames, dados incompletos"})
+         }
+
+         exame = await Exame.find({name})
+
+         if(!exame){
+              logger.error({msg:"Nenhum exame ativo!"})
+              return res.status(400).send({erro:"Nenhum exame ativo!"})
+         }
+         logger.info({msg:"Exames encontrados!"})
+         return res.send({exame})
+
+    } catch(err){
+         logger.error({msg:"Erro ao encontrar exames"})
+         res.status(400).send({erro:"Erro ao encontrar exames"})
+    }
+}
+
+
 const deleteExame = async (req, res)=>{
      try{
           const {_id} = req.body
@@ -99,6 +125,20 @@ const updateExame = async (req, res) => {
 }
 
 
+const createExameLot = async (req, res)=>{
+    try{
+         await Exame.create(req.body)
+         logger.info({msg:"Exames cadastrados com sucesso!"})
+         return res.send('ok')
+
+    } catch(err){
+         console.log(err)
+         logger.error({msg:"Erro no registro dos exames"})
+         res.status(400).send({hasError: true, erro: "Erro no registro do exame"})
+    }
+}
 
 
-module.exports = {createExame, getExames, deleteExame, updateExame}
+
+
+module.exports = {createExame, getExames, getExamesAss, deleteExame, updateExame, createExameLot}

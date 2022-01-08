@@ -13,7 +13,12 @@ const LabSchema = new mongoose.Schema({
           type:String,
           require:true
          
-     },     
+     },    
+     loteLab:{
+          type:Object,
+          require:true
+         
+     },   
 
      createdAt:{
           type:Date,

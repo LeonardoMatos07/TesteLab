@@ -99,4 +99,18 @@ const updateLab = async (req, res) => {
      }
 }
 
-module.exports = {createLab, getLabs, deleteLab, updateLab}
+const createLabLot = async (req, res)=>{
+     try{
+          loteLab = await Lab.create(req.body)
+          logger.info({msg:"Laboratórios cadastrados com sucesso!"})
+          return res.send({loteLab})
+ 
+     } catch(err){
+          console.log(err)
+          logger.error({msg:"Erro no registro dos laboratórios"})
+          res.status(400).send({hasError: true, erro: "Erro no registro dos laboratórios"})
+     }
+ }
+ 
+
+module.exports = {createLab, getLabs, deleteLab, updateLab, createLabLot}

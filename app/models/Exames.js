@@ -17,11 +17,10 @@ const ExameSchema = new mongoose.Schema({
      lab:{
         type:Object,
         require:true,
-   },  
-
-     createdAt:{
-          type:Date,
-          default: Date.now()
+    },  
+    createdAt:{
+         type:Date,
+         default: Date.now()
      }
     
 })

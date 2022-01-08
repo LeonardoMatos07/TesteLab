@@ -29,6 +29,10 @@ router.get('/exame/get', async (req, res)=>{
      await exameController.getExames(req, res);
 })
 
+router.get('/exameAss/get', async (req, res)=>{
+     await exameController.getExamesAss(req, res);
+})
+
 router.delete('/exame/delete', async (req, res)=>{
      await exameController.deleteExame(req, res);
 })
@@ -41,4 +45,14 @@ router.put('/exame/update', async (req, res)=>{
 router.get('/association/get', async (req, res)=>{
      await exameController.associationExame(req, res);
 })
+
+router.post('/exame/createLot', async (req, res)=>{
+     await exameController.createExameLot(req, res);
+})
+
+router.post('/lab/createLot', async (req, res)=>{
+     await labController.createLabLot(req, res);
+})
+
+
 module.exports = router
