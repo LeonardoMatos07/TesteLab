@@ -54,5 +54,9 @@ router.post('/lab/createLot', async (req, res)=>{
      await labController.createLabLot(req, res);
 })
 
+router.delete('/exame/deleteLot', async (req, res)=>{
+     await exameController.deleteExameLot(req, res);
+})
+
 
 module.exports = router

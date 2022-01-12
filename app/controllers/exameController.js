@@ -115,8 +115,8 @@ const updateExame = async (req, res) => {
 
           await Exame.findOneAndUpdate({_id: _id}, {status: statusUp, name:nameUp, tipo: tipoUp, lab:labUp})
           
-          return res.send('Dados alterados')
-         
+          logger.info({msg:"Exame alterado!"})
+          return res.send("Exame alterado!")
 
      } catch(err){
           logger.error({msg:"Erro ao atualizar exame"})
@@ -127,9 +127,9 @@ const updateExame = async (req, res) => {
 
 const createExameLot = async (req, res)=>{
     try{
-         await Exame.create(req.body)
+         loteExame = await Exame.insertMany(req.body)
          logger.info({msg:"Exames cadastrados com sucesso!"})
-         return res.send('ok')
+         return res.send({loteExame})
 
     } catch(err){
          console.log(err)
@@ -139,6 +139,21 @@ const createExameLot = async (req, res)=>{
 }
 
 
+const deleteExameLot = async (req, res)=>{
+    try{
+         const {_id} = req.body
+
+         await Exame.deleteOne({_id})
+         logger.info({msg:"Exame deletado!"})
+         return res.send("Exame deletado!")
+
+    } catch(err){
+         logger.error({msg:"Erro ao deletar exame, dados inválidos"})
+         res.status(400).send({erro:"Erro ao deletar exame, dados inválidos"})
+    }
+}
 
 
-module.exports = {createExame, getExames, getExamesAss, deleteExame, updateExame, createExameLot}
+
+
+module.exports = {createExame, getExames, getExamesAss, deleteExame, updateExame, createExameLot, deleteExameLot}

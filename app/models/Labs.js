@@ -14,12 +14,6 @@ const LabSchema = new mongoose.Schema({
           require:true
          
      },    
-     loteLab:{
-          type:Object,
-          require:true
-         
-     },   
-
      createdAt:{
           type:Date,
           default: Date.now()

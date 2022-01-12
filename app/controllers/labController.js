@@ -83,6 +83,12 @@ const updateLab = async (req, res) => {
      try {
           const {_id, nameUp, enderecoUp, statusUp} = req.body
 
+          var name = nameUp
+          if(await Lab.findOne({name})){
+               logger.warn({msg:"Laboratório já está registrado com esse nome"})
+               return res.status(400).send({hasError: true, erro: "Laboratório já está registrado com esse nome"})
+          }
+
           if(!await Lab.findOne({_id})){
                logger.warn({msg:"Laboratório não encontrado"})
                return res.status(400).send({hasError: true, erro: "Laboratório não encontrado"})
@@ -90,7 +96,8 @@ const updateLab = async (req, res) => {
 
           await Lab.findOneAndUpdate({_id: _id}, {name:nameUp, endereco: enderecoUp, status: statusUp})
           
-          return res.send('Dados alterados')
+          logger.info({msg:"Laboratório alterado!"})
+          return res.send("Laboratório alterado!")
          
 
      } catch(err){
@@ -101,7 +108,7 @@ const updateLab = async (req, res) => {
 
 const createLabLot = async (req, res)=>{
      try{
-          loteLab = await Lab.create(req.body)
+          loteLab = await Lab.insertMany(req.body)
           logger.info({msg:"Laboratórios cadastrados com sucesso!"})
           return res.send({loteLab})
  
