@@ -54,21 +54,21 @@ const getLabs = async (req, res)=>{
 
 const deleteLab = async (req, res)=>{
      try{
-          const {name} = req.body
+          const {_id} = req.body
 
-          if(!name){
+          if(!_id){
                logger.error({msg:"Não foi possivel encontrar o laboratório, dados incompletos"})
                return res.status(400).send({hasError: true, erro: "Não foi possivel encontrar o laboratório, dados incompletos"})
           }
 
-          lab = await Lab.findOne({name})
+          lab = await Lab.findOne({_id})
 
           if(!lab){
                logger.error({msg:"Laboratório não registrado!"})
                return res.status(400).send({erro:"Laboratório não registrado!"})
           }
 
-          await Lab.deleteOne({name})
+          await Lab.deleteOne({_id})
           logger.info({msg:"Laboratório deletado!"})
           return res.send("Laboratório deletado!")
 
@@ -82,12 +82,6 @@ const updateLab = async (req, res) => {
 
      try {
           const {_id, nameUp, enderecoUp, statusUp} = req.body
-
-          var name = nameUp
-          if(await Lab.findOne({name})){
-               logger.warn({msg:"Laboratório já está registrado com esse nome"})
-               return res.status(400).send({hasError: true, erro: "Laboratório já está registrado com esse nome"})
-          }
 
           if(!await Lab.findOne({_id})){
                logger.warn({msg:"Laboratório não encontrado"})

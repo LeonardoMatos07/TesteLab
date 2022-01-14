@@ -51,24 +51,26 @@ const getExames = async (req, res)=>{
      }
 }
 
+// getExamesAss faz a busca de um exame pelo id e retorna os laboratórios associados, não faz pelo nome pq pode ter mais de um exame com o mesmo nome
 
 const getExamesAss = async (req, res)=>{
     try{
-         const {name} = req.body
+         const {_id} = req.body
 
-         if(!name){
-              logger.error({msg:"Não foi possivel encontrar os exames, dados incompletos"})
-              return res.status(400).send({hasError: true, erro: "Não foi possivel encontrar os exames, dados incompletos"})
+         if(!_id){
+              logger.error({msg:"Não foi possivel encontrar o exame, dados incompletos"})
+              return res.status(400).send({hasError: true, erro: "Não foi possivel encontrar o exame, dados incompletos"})
          }
 
-         exame = await Exame.find({name})
+         exame = await Exame.findOne({_id})
 
          if(!exame){
-              logger.error({msg:"Nenhum exame ativo!"})
-              return res.status(400).send({erro:"Nenhum exame ativo!"})
+              logger.error({msg:"Exame não encontrado!"})
+              return res.status(400).send({erro:"Exame não encontrado!"})
          }
+         const {lab} = exame
          logger.info({msg:"Exames encontrados!"})
-         return res.send({exame})
+         return res.send({lab})
 
     } catch(err){
          logger.error({msg:"Erro ao encontrar exames"})
@@ -138,22 +140,4 @@ const createExameLot = async (req, res)=>{
     }
 }
 
-
-const deleteExameLot = async (req, res)=>{
-    try{
-         const {_id} = req.body
-
-         await Exame.deleteOne({_id})
-         logger.info({msg:"Exame deletado!"})
-         return res.send("Exame deletado!")
-
-    } catch(err){
-         logger.error({msg:"Erro ao deletar exame, dados inválidos"})
-         res.status(400).send({erro:"Erro ao deletar exame, dados inválidos"})
-    }
-}
-
-
-
-
-module.exports = {createExame, getExames, getExamesAss, deleteExame, updateExame, createExameLot, deleteExameLot}
+module.exports = {createExame, getExames, getExamesAss, deleteExame, updateExame, createExameLot}

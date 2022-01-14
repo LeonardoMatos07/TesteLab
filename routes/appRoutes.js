@@ -4,7 +4,6 @@ const labController = require("../app/controllers/labController");
 const exameController = require("../app/controllers/exameController");
 
 
-
 router.post('/lab/create', async (req, res)=>{
      await labController.createLab(req, res);
 })
@@ -41,7 +40,6 @@ router.put('/exame/update', async (req, res)=>{
      await exameController.updateExame(req, res);
 })
 
-
 router.get('/association/get', async (req, res)=>{
      await exameController.associationExame(req, res);
 })
@@ -53,10 +51,5 @@ router.post('/exame/createLot', async (req, res)=>{
 router.post('/lab/createLot', async (req, res)=>{
      await labController.createLabLot(req, res);
 })
-
-router.delete('/exame/deleteLot', async (req, res)=>{
-     await exameController.deleteExameLot(req, res);
-})
-
 
 module.exports = router
